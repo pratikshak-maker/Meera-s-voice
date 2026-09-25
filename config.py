@@ -37,8 +37,6 @@ GEMINI_MODEL = _env("GEMINI_MODEL", "gemini-3.8-flash")
 # model's voice-matching isn't good enough.
 GEMINI_DRAFT_MODEL = _env("GEMINI_DRAFT_MODEL", GEMINI_MODEL)
 
-NOTIFY_ON_REJECT = os.environ.get("NOTIFY_ON_REJECT", "true").lower() == "true"
-
 # Vercel's filesystem is read-only except /tmp, and each invocation may land
 # on a different instance, so this state is best-effort, not durable - fine
 # for the calendar-balance rubric metric, which only needs a rough recent

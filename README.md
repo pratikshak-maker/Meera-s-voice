@@ -56,7 +56,7 @@ allow polling and a webhook to be active on the same bot simultaneously):
 2. In the Vercel project's Settings -> Environment Variables, set `TELEGRAM_BOT_TOKEN`,
    `GEMINI_API_KEY`, `WEBHOOK_SECRET` (any random string - generate one with
    `python -c "import secrets; print(secrets.token_hex(24))"`), and optionally
-   `GEMINI_MODEL` / `GEMINI_DRAFT_MODEL` / `NOTIFY_ON_REJECT`. These are **not** read
+   `GEMINI_MODEL` / `GEMINI_DRAFT_MODEL`. These are **not** read
    from `.env` in production - `.env` is gitignored and never deployed.
 3. Deploy. Note the resulting URL (e.g. `https://your-project.vercel.app`).
 4. Register the webhook with Telegram (replace the placeholders):
@@ -119,5 +119,7 @@ Google News needs no key - `news_context.py` hits the public RSS search endpoint
 - Triage thresholds (`draft_now` >= 3.5, `hold` >= 2.5, else `archive`) and metric
   weights live in the system instruction in `triage.py` - the rubric doc is the source
   of truth, edit both together if you change it.
-- `NOTIFY_ON_REJECT=false` in `.env` silences the "not developing this one" pings and
-  just logs locally instead.
+- Every incoming fragment always gets a reply - an immediate "Got it" acknowledgment,
+  then either a draft or the full triage verdict/reasoning. This is intentionally not
+  configurable: an env-var-gated version of this silently dropped replies in
+  production with no visible error, so it was removed rather than debugged further.

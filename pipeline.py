@@ -1,6 +1,5 @@
 import logging
 
-from config import NOTIFY_ON_REJECT
 from telegram_client import extract_fragment, send_message, get_file_path, download_file
 from transcribe import transcribe_voice
 from triage import triage_fragment
@@ -49,10 +48,11 @@ def process_update(update: dict):
     verdict = triage.get("verdict")
 
     if verdict != "draft_now":
-        if NOTIFY_ON_REJECT:
-            label = VERDICT_LABELS.get(verdict, "not developing this one")
-            reason = triage.get("gate_reason") or triage.get("reasoning") or ""
-            send_message(chat_id, f"{label}{(' - ' + reason) if reason else ''}")
+        # Unconditional, not gated behind NOTIFY_ON_REJECT - that env var
+        # silently swallowed this reply in production with no visible
+        # error, so removed entirely rather than debugged further. A reply
+        # should never depend on a setting that can misfire silently.
+        send_message(chat_id, format_triage_message(triage))
         return
 
     news = find_news_angle(text, triage.get("category"))
@@ -67,6 +67,27 @@ def process_update(update: dict):
     send_message(chat_id, message)
 
     record_draft(fragment["fragment_id"], draft.get("category_tag") or triage.get("category", ""))
+
+
+def format_triage_message(triage: dict) -> str:
+    label = VERDICT_LABELS.get(triage.get("verdict"), "not developing this one")
+    lines = [
+        label.upper(),
+        "",
+        f"Category: {triage.get('category')} | Weighted score: {triage.get('weighted_score')}/5.0",
+    ]
+    scores = triage.get("scores") or {}
+    if scores:
+        score_line = " | ".join(f"{k}={v}" for k, v in scores.items())
+        lines.append(f"Scores: {score_line}")
+    reasoning = triage.get("reasoning")
+    if reasoning:
+        lines.append("")
+        lines.append(reasoning)
+    if triage.get("gate") == "FAIL" and triage.get("gate_reason"):
+        lines.append("")
+        lines.append(f"Safety gate: {triage['gate_reason']}")
+    return "\n".join(lines)
 
 
 def format_draft_message(triage: dict, draft: dict) -> str:
