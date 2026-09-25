@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+offset.txt
+post_history.json
+*.log
+.venv/

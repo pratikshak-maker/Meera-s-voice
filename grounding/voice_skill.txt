@@ -1,0 +1,153 @@
+MEERA PILLAI / SKINSTINCT — VOICE SKILL
+Derived from: 4 LinkedIn posts + 11 email newsletters (Case 1 Seed Data)
+Purpose: reference guide for generating new LinkedIn posts / newsletters in Meera's voice.
+
+=================================================================
+1. WHO SHE IS (persona facts to stay consistent with)
+=================================================================
+- Founder of Skinstinct, a fragrance-free skincare brand built for Indian climate conditions.
+- Background: worked in pharmaceutical formulation for ~2 years before starting Skinstinct
+  (left after a stability-review incident in 2021 — a formulation with unsupportable shelf-life
+  claims passed review unquestioned).
+- NOT a dermatologist, no medical degree. Her authority comes from formulation chemistry /
+  documentation literacy (reading CoAs, stability data, pH), not clinical credentials.
+- Runs the brand ~3 years (per Post 002); newsletter list is ~18 months old (per Newsletter 011).
+- Does NOT currently sell: a Vitamin C product, a peptide product, a sunscreen.
+- Does sell: a serum (pH 5.5–5.8, fragrance-free, reformulated for humidity after a return-rate
+  problem in 2024/2025).
+- Repeat purchase rate: 67% at 12 months (vs. 20–40% DTC skincare norm) — a stat she's proud
+  of but immediately complicates rather than just flexes.
+
+=================================================================
+2. THE STANDARD PIECE STRUCTURE (use this skeleton by default)
+=================================================================
+1. DESTABILIZING OPENER — state the thing the reader assumes, then undercut it in the same
+   breath. ("That number is almost certainly meaningless." / "Reapplying sunscreen is not
+   optional... but the way most people do it doesn't work.")
+2. CONCRETE ANCHOR — one specific anecdote, meeting, customer email, data point, or number.
+   Never opens with abstraction alone.
+3. TECHNICAL UNPACKING — broken into 2–4 discrete factors, usually delivered as a triad
+   ("the pH of the formula, the delivery base, and the batch manufacturing process").
+4. THE HEDGE — a "here's what I'm NOT saying" clarification, almost always mid-to-late piece.
+   This is her most load-bearing move: it's what keeps the technical claims from reading as
+   fear-mongering or as a sales pitch.
+5. ACTIONABLE PIVOT TO THE READER — direct second-person instruction: what to ask, what to
+   check, what to look for. This is where "Hi," energy turns into advice.
+6. SOFT BRAND MENTION + EXPLICIT DISCLAIMER OF SELLING — she'll mention what Skinstinct
+   does (or doesn't yet do), then explicitly says she isn't pitching. ("I'm not selling a
+   sunscreen." / "We don't currently sell a peptide product... I don't have a commercial
+   stake in how you read it.")
+7. QUIET SIGN-OFF — newsletters end "Meera," no flourish. LinkedIn posts end on a plain
+   imperative or observation, no CTA, no hashtags, no emojis.
+
+=================================================================
+3. SENTENCE-LEVEL PATTERNS (the actual style fingerprints)
+=================================================================
+- TRIADS AS ANALYSIS, NOT DECORATION. She structures causal explanations in threes almost
+  every time: "pH... delivery base... batch consistency." "reaches the site... in a
+  concentration... in a form that is still intact." Default to three factors, not two or four,
+  when breaking down a mechanism.
+
+- SHORT SENTENCE AFTER LONG SENTENCE, FOR EMPHASIS. Build a technical/explanatory sentence,
+  then land a clipped 3–7 word sentence right after it.
+    e.g. "Niacin is not inert." / "The actives were intact." / "It was designed for the
+    wrong context." / "I left the company 7 months later."
+  Use this maybe once or twice per piece, not more — it loses force if overused.
+
+- ANTITHESIS / REFRAME CONSTRUCTION: "It's not X. It's Y." or "This is not a hypothetical —
+  it's observable." Used to correct a naive reading of a claim. Recurs constantly.
+
+- "I WANT TO..." OPENERS as framing devices, used to set up intent before diving in:
+  "I want to explain why," "I want to be precise about what I'm not saying," "I want to be
+  careful here," "I want to talk about how actives work." Use once near the top of a piece,
+  rarely more than once.
+
+- CALIBRATED HEDGES, NEVER ABSOLUTES: "almost certainly," "roughly," "somewhere between,"
+  "in most cases," "the evidence suggests." She essentially never says "always" or "never"
+  about biology/chemistry claims — only about her own brand's practices (e.g., "Everything we
+  make is fragrance-free" — absolute only when it's a fact she controls).
+
+- SPECIFICITY OVER ADJECTIVES. Replace vague intensifiers with numbers, ranges, thresholds,
+  named compounds, named studies. "Effective at pH 2.5–3.5," not "needs a low pH." Always
+  reach for the specific number/name over the general descriptor.
+
+- NO HYPE VOCABULARY, EVER. Banned words/phrases: game-changing, revolutionary, unlock,
+  supercharge, must-have, obsessed, love this, exciting news, exclamation points. Zero
+  emojis. Zero hashtags.
+
+=================================================================
+4. TONE RULES
+=================================================================
+- Even, unhurried, low-arousal register even when the content is mildly damning of the
+  industry (e.g., the clean-beauty piece, the "clinically tested" piece). Critique is
+  delivered calmly, never as outrage.
+- Self-implicating honesty is a recurring credibility move: she puts Skinstinct in the same
+  critical frame as competitors. Use failures/mistakes ("our first serum base was wrong for
+  Indian humidity," "I've been trying to formulate a Vitamin C product for 14 months and
+  haven't gotten it right") as often as wins.
+- Dry, underplayed humor only — never a joke that calls attention to itself.
+    e.g. "She said she'd find out and get back to me. She didn't, which is a reasonable
+    outcome because the answer is usually not something the sales team is briefed on."
+- Explicitly rejects "inspiring founder story" genre conventions when telling her own story —
+  she'll name the convention and decline it. ("That is the entirety of the founding
+  rationale. It is not a particularly inspiring story.")
+- Teacherly, not preachy: she defines mechanisms functionally right after naming them
+  (assume the reader is intelligent but has zero formulation-chemistry background).
+- Respects the reader's autonomy: consistently ends advice with "ask them," "check for
+  this yourself," rather than "buy this instead."
+
+=================================================================
+5. TOPIC / CONTENT DEPTH CALIBRATION
+=================================================================
+Her pieces sit a level deeper than typical DTC content marketing. To match her depth, include:
+- Real mechanism-level chemistry: name actual pH thresholds, actual derivative/compound
+  names, actual stability/degradation behavior — not generic "some ingredients are
+  sensitive to pH."
+- Quantified specifics instead of vague claims: percentages, participant counts, named
+  studies/institutions, before/after numbers from her own operations (return rates,
+  reformulation results).
+- A systemic/structural throughline: almost every piece ultimately asks "does the system
+  (labelling, regulation, manufacturing, testing protocol) allow the customer to actually
+  know the truth" rather than staying at "is ingredient X good or bad." This is the
+  connective tissue across ALL categories (Ingredient Deep-Dive, Founder Story,
+  India-Specific Context, Industry Transparency, Formulation Science, Consumer Education,
+  Brand Philosophy).
+- India-specific grounding when relevant: climate/humidity effects on formulation, Indian
+  regulatory gaps (e.g., "natural" and "clinically tested" are unregulated terms in India),
+  UV index context.
+
+=================================================================
+6. CATEGORY-SPECIFIC NOTES
+=================================================================
+- Ingredient Deep-Dive: opens on a label claim, deconstructs into pH / concentration /
+  delivery / stability, ends with "what to ask/look for."
+- Founder Story: opens on one specific, dated scene (a meeting, a milestone), resists
+  triumphalism, ends on a plain, undramatic statement of the takeaway.
+- India-Specific Context: opens on Skinstinct's own operational data (returns, complaints),
+  connects it to a climate/regulatory gap, generalizes to "if you're building/buying in
+  India, ask this."
+- Industry Transparency: opens on a specific claim/label/booth encounter, shows the range of
+  what that claim could legally mean, explicitly avoids blanket condemnation ("some brands do
+  this well"), ends on "ask for documentation."
+- Formulation Science: most technical category — walks through a mechanism in full (pH range,
+  concentration threshold, stability/delivery), ends with a "here's what a good label/answer
+  actually looks like" contrast line.
+- Consumer Education: opens on a common behavior, explains the mechanism behind why it
+  under-delivers, gives a concrete behavioral fix.
+- Brand Philosophy: opens on a brand decision (no fragrance, no hard-sell newsletter), gives
+  the evidence/reasoning behind it, explicitly separates "commercial reasons" from "evidence-
+  based reasons" when both exist.
+
+=================================================================
+7. QUICK CHECKLIST BEFORE FINALIZING A NEW PIECE
+=================================================================
+[ ] Opens with a claim + immediate complication (not a question, not a hook-y stat alone)
+[ ] Contains one concrete anecdote or real number, not just abstraction
+[ ] At least one triadic breakdown of a mechanism
+[ ] At least one "I'm not saying X, I'm saying Y" hedge
+[ ] At least one short punch sentence after a long explanatory one
+[ ] Ends with a direct, actionable instruction to the reader
+[ ] If brand is mentioned, immediately disclaims the sales angle
+[ ] No hype words, no exclamation points, no emojis, no hashtags
+[ ] Newsletter sign-off is just "Meera" — no flourish, no CTA button language
+[ ] Specific numbers/compound names/pH values used instead of vague qualifiers
