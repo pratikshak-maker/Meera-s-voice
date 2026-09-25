@@ -24,6 +24,12 @@ def process_update(update: dict):
 
     chat_id = fragment["chat_id"]
 
+    # Sent before anything else, unconditionally - triage/news/draft can
+    # each take 10-40s combined, and previously gave no sign of life until
+    # (if) a verdict came back, which was indistinguishable from the
+    # webhook never firing at all. This confirms receipt immediately.
+    send_message(chat_id, "Got it - reading this now.")
+
     if fragment["kind"] == "voice":
         file_path = get_file_path(fragment["file_id"])
         audio_bytes = download_file(file_path)

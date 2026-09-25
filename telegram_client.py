@@ -1,7 +1,11 @@
+import logging
+
 import requests
 from config import TELEGRAM_BOT_TOKEN
 
 API_BASE = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
+
+log = logging.getLogger("telegram_client")
 
 
 def get_updates(offset=None, timeout=30):
@@ -17,11 +21,21 @@ def get_updates(offset=None, timeout=30):
 
 
 def send_message(chat_id, text, parse_mode=None):
+    # `requests` doesn't auto-log calls the way the Gemini SDK's httpx client
+    # does, so a send here was previously invisible either way it went -
+    # explicit logging on both ends makes success/failure show up in Vercel
+    # logs regardless, instead of having to infer it from silence.
+    log.info("Sending Telegram message to chat_id=%s (%d chars)", chat_id, len(text))
     payload = {"chat_id": chat_id, "text": text}
     if parse_mode:
         payload["parse_mode"] = parse_mode
     resp = requests.post(f"{API_BASE}/sendMessage", json=payload, timeout=30)
-    resp.raise_for_status()
+    try:
+        resp.raise_for_status()
+    except requests.HTTPError:
+        log.error("sendMessage failed: %s - %s", resp.status_code, resp.text)
+        raise
+    log.info("sendMessage OK: message_id=%s", resp.json().get("result", {}).get("message_id"))
     return resp.json()
 
 
