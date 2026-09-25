@@ -28,7 +28,15 @@ matches the swimlane diagram you sketched. No dedupe-against-processed-IDs step 
 needed because there's no batching; `history.py` keeps a small rolling log of recent
 categories purely for the rubric's "calendar balance" metric.
 
-## Setup
+There are two ways to run this - pick one, don't run both at once (Telegram doesn't
+allow polling and a webhook to be active on the same bot simultaneously):
+
+- **Local polling** (`main.py`) - simplest for development, no public URL needed.
+- **Vercel webhook** (`app.py`) - for a real deployment. Vercel functions are
+  short-lived request handlers, not long-running processes, so `main.py`'s `while True`
+  polling loop cannot run there at all - Telegram has to push each update to us instead.
+
+## Setup (local polling)
 
 1. `python -m venv .venv` then activate it, then `pip install -r requirements.txt`
 2. Copy `.env.example` to `.env` if you don't already have one, and fill in the keys
@@ -40,13 +48,48 @@ categories purely for the rubric's "calendar balance" metric.
    Gemini key, no Telegram needed.
 5. `python main.py` - starts the live polling loop.
 
+## Deploying to Vercel (webhook)
+
+1. Push to GitHub and import the repo in Vercel (or let an already-connected repo
+   redeploy). Vercel auto-detects `app.py` as a Python/Flask function because it
+   exports a top-level `app`.
+2. In the Vercel project's Settings -> Environment Variables, set `TELEGRAM_BOT_TOKEN`,
+   `GEMINI_API_KEY`, `WEBHOOK_SECRET` (any random string - generate one with
+   `python -c "import secrets; print(secrets.token_hex(24))"`), and optionally
+   `GEMINI_MODEL` / `GEMINI_DRAFT_MODEL` / `NOTIFY_ON_REJECT`. These are **not** read
+   from `.env` in production - `.env` is gitignored and never deployed.
+3. Deploy. Note the resulting URL (e.g. `https://your-project.vercel.app`).
+4. Register the webhook with Telegram (replace the placeholders):
+   ```
+   curl "https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://your-project.vercel.app/webhook&secret_token=<WEBHOOK_SECRET>"
+   ```
+   From this point on Telegram pushes every message to that URL instead of anything
+   polling for it - stop any local `python main.py` process first, or it and the
+   webhook will both try to handle the same messages.
+5. Sanity check: `curl https://your-project.vercel.app/` should return "Skinstinct
+   content pipeline is running."
+
+Two Vercel-specific things already handled in the code, carried over from lessons
+learned deploying the sibling project on this same account:
+- `.python-version` pins Python 3.12, and `from __future__ import annotations` guards
+  every file using `X | None` style type hints, since an older interpreter parsing
+  those directly has broken Vercel Python builds here before.
+- `vercel.json` sets `maxDuration: 60` on `app.py` - the triage + news + draft chain
+  can take 20-40s end to end (more with the draft.py retry), which exceeds Vercel's
+  10s default.
+- `history.py`'s state file lives in the OS temp dir (`/tmp` on Vercel), never in the
+  project directory, which is read-only at runtime.
+
 ## Keys
 
 | Env var | Where to get it | Notes |
 |---|---|---|
 | `TELEGRAM_BOT_TOKEN` | [@BotFather](https://t.me/BotFather) on Telegram | |
-| `TELEGRAM_CHAT_ID` | `getChat` / forward a message to `@userinfobot` | Must be a chat/channel/group the bot is a member (and, for channels, an *admin*) of |
 | `GEMINI_API_KEY` | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) | Used for everything AI-side: triage (`triage.py`), voice transcription (`transcribe.py`), and drafting (`draft.py`) |
+| `WEBHOOK_SECRET` | Generate your own (see step 2 above) | Only used by `app.py` - validates that webhook calls actually came from Telegram, not an open POST endpoint anyone can hit |
+
+`TELEGRAM_CHAT_ID` is deliberately not a config value - each reply goes back to
+whichever chat the incoming message came from, read from the update itself.
 
 Google News needs no key - `news_context.py` hits the public RSS search endpoint
 (`news.google.com/rss/search`).
@@ -62,8 +105,10 @@ Google News needs no key - `news_context.py` hits the public RSS search endpoint
   to the same model as triage - point it at a stronger tier independently if voice
   quality needs it)
 - `history.py` - rolling log of recently-drafted categories (rubric metric 5)
-- `pipeline.py` - orchestrates one fragment end to end
-- `main.py` - polling loop entrypoint
+- `pipeline.py` - orchestrates one fragment end to end (shared by both entrypoints)
+- `main.py` - local polling loop entrypoint
+- `app.py` - Vercel/Flask webhook entrypoint
+- `vercel.json`, `.python-version` - Vercel deployment config
 - `grounding/voice_skill.txt`, `grounding/published_pieces.md` - the only ground truth
   for Meera's voice and what's already been published; attached to every AI call
 - `test_notes/`, `test_triage.py` - the 5 seed notes and a harness to validate Stage 1

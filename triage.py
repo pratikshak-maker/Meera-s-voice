@@ -7,6 +7,8 @@ notes in drive-download-20260925T085546Z-1-001.zip). This replaces the looser
 five-bullet criteria in the original gemini-content-pipeline-prompts.md.
 """
 
+from __future__ import annotations
+
 import json
 from google import genai
 from google.genai import types

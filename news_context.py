@@ -10,6 +10,8 @@ Stage 3 alongside the fragment and voice skill, with the instruction: use it
 if it's genuinely relevant, ignore it if it doesn't fit naturally.
 """
 
+from __future__ import annotations
+
 import html
 import json
 import re

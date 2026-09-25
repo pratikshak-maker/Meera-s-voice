@@ -10,6 +10,8 @@ cheap insurance that doesn't depend on the model re-reading its own output
 carefully.
 """
 
+from __future__ import annotations
+
 import json
 import re
 from google import genai
