@@ -10,11 +10,9 @@ five-bullet criteria in the original gemini-content-pipeline-prompts.md.
 from __future__ import annotations
 
 import json
-from google import genai
 from google.genai import types
-from config import GEMINI_API_KEY, GEMINI_MODEL, GROUNDING_DIR
-
-client = genai.Client(api_key=GEMINI_API_KEY)
+from config import GEMINI_MODEL, GROUNDING_DIR
+from gemini_client import get_client
 
 VOICE_SKILL = (GROUNDING_DIR / "voice_skill.txt").read_text(encoding="utf-8")
 PUBLISHED_PIECES = (GROUNDING_DIR / "published_pieces.md").read_text(encoding="utf-8")
@@ -145,7 +143,7 @@ def triage_fragment(fragment_text: str, recent_categories: list | None = None) -
     recent = ", ".join(recent_categories) if recent_categories else "unknown"
     prompt = f"Fragment:\n{fragment_text}\n\nRecent post categories (most recent first): {recent}"
 
-    response = client.models.generate_content(
+    response = get_client().models.generate_content(
         model=GEMINI_MODEL,
         contents=prompt,
         config=types.GenerateContentConfig(

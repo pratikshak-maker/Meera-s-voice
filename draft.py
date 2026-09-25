@@ -14,11 +14,9 @@ from __future__ import annotations
 
 import json
 import re
-from google import genai
 from google.genai import types
-from config import GEMINI_API_KEY, GEMINI_DRAFT_MODEL, GROUNDING_DIR
-
-client = genai.Client(api_key=GEMINI_API_KEY)
+from config import GEMINI_DRAFT_MODEL, GROUNDING_DIR
+from gemini_client import get_client
 
 VOICE_SKILL = (GROUNDING_DIR / "voice_skill.txt").read_text(encoding="utf-8")
 PUBLISHED_PIECES = (GROUNDING_DIR / "published_pieces.md").read_text(encoding="utf-8")
@@ -114,7 +112,7 @@ def _find_violations(post_text: str) -> list:
 
 
 def _generate(prompt: str) -> dict:
-    response = client.models.generate_content(
+    response = get_client().models.generate_content(
         model=GEMINI_DRAFT_MODEL,
         contents=prompt,
         config=types.GenerateContentConfig(

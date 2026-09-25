@@ -13,7 +13,7 @@ import logging
 
 from flask import Flask, jsonify, request
 
-from config import WEBHOOK_SECRET
+from config import REQUIRED, WEBHOOK_SECRET
 from pipeline import process_update
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -24,11 +24,24 @@ app = Flask(__name__)
 
 @app.get("/")
 def health():
-    return "Skinstinct content pipeline is running.", 200
+    # Reports which required env vars are actually set on this deployment
+    # (never the values) - Vercel needs a redeploy to pick up env var
+    # changes on an existing deployment, so this is the fastest way to
+    # confirm they landed without digging through function logs.
+    status = {k: ("set" if v else "MISSING") for k, v in REQUIRED.items()}
+    lines = ["Skinstinct content pipeline is running.", ""] + [
+        f"{k}: {v}" for k, v in status.items()
+    ]
+    return "\n".join(lines), 200, {"Content-Type": "text/plain"}
 
 
 @app.post("/webhook")
 def webhook():
+    missing = [k for k, v in REQUIRED.items() if not v]
+    if missing:
+        log.error("Missing required env vars: %s", missing)
+        return jsonify({"ok": False, "error": f"Missing env vars: {missing}"}), 500
+
     if WEBHOOK_SECRET:
         header = request.headers.get("X-Telegram-Bot-Api-Secret-Token", "")
         if header != WEBHOOK_SECRET:

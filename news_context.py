@@ -19,11 +19,9 @@ from urllib.parse import quote_plus
 
 import feedparser
 import requests
-from google import genai
 from google.genai import types
-from config import GEMINI_API_KEY, GEMINI_MODEL
-
-client = genai.Client(api_key=GEMINI_API_KEY)
+from config import GEMINI_MODEL
+from gemini_client import get_client
 
 KEYWORD_SYSTEM_INSTRUCTION = """
 You extract search terms for a news lookup. Given a raw content fragment,
@@ -38,7 +36,7 @@ Output valid JSON only:
 
 
 def _extract_query(fragment_text: str) -> str:
-    response = client.models.generate_content(
+    response = get_client().models.generate_content(
         model=GEMINI_MODEL,
         contents=f"Fragment:\n{fragment_text}",
         config=types.GenerateContentConfig(
