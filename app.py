@@ -15,6 +15,7 @@ from flask import Flask, jsonify, request
 
 from config import REQUIRED, WEBHOOK_SECRET
 from pipeline import process_update
+from telegram_client import extract_fragment, send_message
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("app")
@@ -54,10 +55,22 @@ def webhook():
 
     try:
         process_update(update)
-    except Exception:
+    except Exception as exc:
         # Always 200 back to Telegram regardless of our own failure - a
         # non-200 makes Telegram retry the same update repeatedly, which
         # would re-run (and re-bill) the Gemini calls for no benefit.
         log.exception("Failed to process update %s", update.get("update_id"))
+        # A silent failure looks identical to "still processing" from the
+        # Telegram side - reply with what broke so it's visible without
+        # digging through Vercel's logs every time.
+        try:
+            fragment = extract_fragment(update)
+            if fragment:
+                send_message(
+                    fragment["chat_id"],
+                    f"Something went wrong processing that: {exc.__class__.__name__}: {exc}",
+                )
+        except Exception:
+            log.exception("Also failed to send the error notice back to Telegram")
 
     return jsonify({"ok": True}), 200
